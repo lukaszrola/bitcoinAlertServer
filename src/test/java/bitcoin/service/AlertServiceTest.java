@@ -11,8 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class AlertServiceTest {
 
-    private static final Alert FIRST_ALERT = Alert.anAlert("My  firstAlert", BigDecimal.TEN);
-    private static final Alert SECOND_ALERT = Alert.anAlert("My second Alert", BigDecimal.ONE);
+    private static final Alert FIRST_ALERT = Alert.anAlert("My  firstAlert", BigDecimal.ONE);
+    private static final Alert SECOND_ALERT = Alert.anAlert("My second Alert", BigDecimal.TEN);
     private static final Alert THIRD_ALERT = Alert.anAlert("My third Alert", BigDecimal.valueOf(123L));
     private AlertService alertService = new AlertService();
 
@@ -52,6 +52,15 @@ class AlertServiceTest {
         Set<Alert> alerts = alertService.getAlerts();
 
         assertThat(alerts).containsOnly(THIRD_ALERT);
+    }
+
+    @Test
+    void filterAlertsAboveLimit(){
+        addAlerts(FIRST_ALERT, SECOND_ALERT, THIRD_ALERT);
+
+        Set<Alert> alertsAboveLimit = alertService.alertsAboveLimit(SECOND_ALERT.getPriceLimit());
+
+        assertThat(alertsAboveLimit).containsOnly(THIRD_ALERT);
     }
 
     private void addAlerts(Alert... alerts) {
