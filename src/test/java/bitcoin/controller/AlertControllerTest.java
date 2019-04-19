@@ -22,8 +22,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(AlertConrtoller.class)
-class AlertConrtollerTest {
+@WebMvcTest(AlertController.class)
+class AlertControllerTest {
     private static final String GET_ALERTS_URL = "/alerts";
     private static final String SOME_ALERT_NAME = "someAlert";
     private static final Alert SOME_ALERT = Alert.anAlert(SOME_ALERT_NAME, BigDecimal.valueOf(500L),"BTC-USD");

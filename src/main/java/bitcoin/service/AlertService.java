@@ -1,12 +1,10 @@
 package bitcoin.service;
 
 import bitcoin.model.Alert;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,7 +27,7 @@ public class AlertService {
 
     public Set<Alert>  alertsAboveLimit(BigDecimal limit){
         return alerts.stream()
-                .filter(alert -> alert.getPriceLimit().compareTo(limit) > 0)
+                .filter(alert -> alert.getLimit().getPrice().compareTo(limit) > 0)
                 .collect(Collectors.toSet());
     }
 

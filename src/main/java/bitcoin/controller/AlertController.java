@@ -7,16 +7,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
 
 @RestController
-public class AlertConrtoller {
+public class AlertController {
 
     private final AlertService alertService;
 
     @Autowired
-    public AlertConrtoller(AlertService alertService) {
+    public AlertController(AlertService alertService) {
         this.alertService = alertService;
     }
 

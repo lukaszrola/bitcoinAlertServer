@@ -58,7 +58,7 @@ class AlertServiceTest {
     void filterAlertsAboveLimit(){
         addAlerts(FIRST_ALERT, SECOND_ALERT, THIRD_ALERT);
 
-        Set<Alert> alertsAboveLimit = alertService.alertsAboveLimit(SECOND_ALERT.getPriceLimit());
+        Set<Alert> alertsAboveLimit = alertService.alertsAboveLimit(SECOND_ALERT.getLimit().getPrice());
 
         assertThat(alertsAboveLimit).containsOnly(THIRD_ALERT);
     }
