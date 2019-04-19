@@ -26,11 +26,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class AlertConrtollerTest {
     private static final String GET_ALERTS_URL = "/alerts";
     private static final String SOME_ALERT_NAME = "someAlert";
-    private static final Alert SOME_ALERT = Alert.anAlert(SOME_ALERT_NAME, BigDecimal.valueOf(500L));
+    private static final Alert SOME_ALERT = Alert.anAlert(SOME_ALERT_NAME, BigDecimal.valueOf(500L),"BTC-USD");
     private static final String SOME_ALERT_JSON = new Gson().toJson(SOME_ALERT);
     private static final Set<Alert> ALERTS = Set.of(SOME_ALERT);
     private static final String ALERTS_JSON = new Gson().toJson(ALERTS);
-    private static final String ADD_ALERT_URL = "/alert?name=someAlert&limit=500";
+    private static final String ADD_ALERT_URL = "/alert?name=someAlert&limit=500&pair=BTC-USD";
     private static final String DELETE_ALERT_URL = "/alert?name=someAlert";
 
     @Autowired

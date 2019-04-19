@@ -13,17 +13,19 @@ import java.util.Objects;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Alert {
     private static final BigDecimal EMPTY_LIMIT = BigDecimal.ZERO;
+    public static final String EMPTY_CURRENCY = "";
 
     @EqualsAndHashCode.Include
     private final String alertName;
     private final BigDecimal priceLimit;
+    private final String currencyPair;
 
-    public static Alert anAlert(String alertName, BigDecimal limit){
-        return new Alert(alertName,limit);
+    public static Alert anAlert(String alertName, BigDecimal limit, String currencyPair){
+        return new Alert(alertName,limit, currencyPair);
     }
 
     public static Alert anTemplateAlert(String alertName){
-        return new Alert(alertName, EMPTY_LIMIT);
+        return new Alert(alertName, EMPTY_LIMIT, EMPTY_CURRENCY);
     }
 
 }

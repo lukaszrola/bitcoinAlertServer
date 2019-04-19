@@ -27,8 +27,8 @@ public class AlertConrtoller {
 
     @PutMapping("/alert")
     @ResponseStatus(value = HttpStatus.ACCEPTED)
-    public Alert putAlert(@RequestParam String name, @RequestParam BigDecimal limit) {
-        Alert alert = Alert.anAlert(name, limit);
+    public Alert putAlert(@RequestParam String name, @RequestParam BigDecimal limit, @RequestParam(name = "pair") String currencyPair) {
+        Alert alert = Alert.anAlert(name, limit, currencyPair);
         alertService.addAlert(alert);
         return alert;
     }

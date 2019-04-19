@@ -10,9 +10,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class AlertServiceTest {
 
-    private static final Alert FIRST_ALERT = Alert.anAlert("My  firstAlert", BigDecimal.ONE);
-    private static final Alert SECOND_ALERT = Alert.anAlert("My second Alert", BigDecimal.TEN);
-    private static final Alert THIRD_ALERT = Alert.anAlert("My third Alert", BigDecimal.valueOf(123L));
+    private static final String SOME_CURRENCY = "BTC-USD";
+    private static final Alert FIRST_ALERT = Alert.anAlert("My  firstAlert", BigDecimal.ONE, SOME_CURRENCY);
+    private static final Alert SECOND_ALERT = Alert.anAlert("My second Alert", BigDecimal.TEN, SOME_CURRENCY);
+    private static final Alert THIRD_ALERT = Alert.anAlert("My third Alert", BigDecimal.valueOf(123L), SOME_CURRENCY);
     private AlertService alertService = new AlertService();
 
     @Test
