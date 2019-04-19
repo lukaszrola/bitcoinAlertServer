@@ -16,8 +16,8 @@ class BitcoinCurrentPriceProvider {
     private Exchange bitstamp = ExchangeFactory.INSTANCE.createExchange(BitstampExchange.class.getName());
     private MarketDataService marketDataService = bitstamp.getMarketDataService();
 
-    BitcoinPrice getLastPrice(CurrencyPair currencyPair) throws IOException {
-        Ticker ticker = marketDataService.getTicker(currencyPair);
+    BitcoinPrice getLastPrice(String currencyPair) throws IOException {
+        Ticker ticker = marketDataService.getTicker(new CurrencyPair(currencyPair));
         return BitcoinPrice.anBitcoinPrice(ticker.getLast(),currencyPair);
     }
 }

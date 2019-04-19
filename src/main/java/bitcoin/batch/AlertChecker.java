@@ -30,7 +30,7 @@ public class AlertChecker {
     public void checkAlerts() {
 
         try {
-            BigDecimal limit = bitcoinCurrentPriceProvider.getLastPrice(CurrencyPair.BTC_USD).getPrice();
+            BigDecimal limit = bitcoinCurrentPriceProvider.getLastPrice("BTC/USD").getPrice();
             logger.info("Current price: " + limit);
             Set<Alert> alerts = alertService.alertsAboveLimit(limit);
             logger.info("exceeded " + alerts.size() + " alerts");

@@ -10,14 +10,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 
 class BitcoinCurrentPriceProviderIntegrationTest {
-private final BitcoinCurrentPriceProvider bitcoinCurrentPriceProvider = new BitcoinCurrentPriceProvider();
+    private static final String SOME_CURRENCY = CurrencyPair.BTC_USD.toString();
+    private final BitcoinCurrentPriceProvider bitcoinCurrentPriceProvider = new BitcoinCurrentPriceProvider();
 
     @Test
     void shouldGetLatesPriceInUSD() throws IOException {
-        BitcoinPrice lastPrice = bitcoinCurrentPriceProvider.getLastPrice(CurrencyPair.BTC_USD);
-
+        BitcoinPrice lastPrice = bitcoinCurrentPriceProvider.getLastPrice(SOME_CURRENCY);
         assertThat(lastPrice).isNotNull();
-        assertThat(lastPrice.getCurrencyPair()).isEqualTo(CurrencyPair.BTC_USD);
-        assertThat(lastPrice.getPrice()).isNotNull();
+        assertThat(lastPrice.getCurrencyPair()).isEqualTo(SOME_CURRENCY);
     }
 }

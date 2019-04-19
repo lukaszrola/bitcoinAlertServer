@@ -21,7 +21,11 @@ public class Alert {
     private final String currencyPair;
 
     public static Alert anAlert(String alertName, BigDecimal limit, String currencyPair){
-        return new Alert(alertName,limit, currencyPair);
+        return new Alert(alertName,limit, formatCurrency(currencyPair));
+    }
+
+    private static String formatCurrency(String currencyPair) {
+        return currencyPair.replace('-', '/');
     }
 
     public static Alert anTemplateAlert(String alertName){

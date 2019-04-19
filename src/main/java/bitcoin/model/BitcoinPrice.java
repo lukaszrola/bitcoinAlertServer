@@ -11,9 +11,9 @@ import java.math.BigDecimal;
 @Getter
 public class BitcoinPrice {
     private final BigDecimal price;
-    private final CurrencyPair currencyPair;
+    private final String currencyPair;
 
-    public static BitcoinPrice anBitcoinPrice(BigDecimal price, CurrencyPair currencyPair) {
+    public static BitcoinPrice anBitcoinPrice(BigDecimal price, String currencyPair) {
         return new BitcoinPrice(price, currencyPair);
     }
 }
