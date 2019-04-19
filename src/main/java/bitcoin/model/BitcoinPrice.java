@@ -1,27 +1,19 @@
 package bitcoin.model;
 
-        import org.knowm.xchange.currency.CurrencyPair;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.knowm.xchange.currency.CurrencyPair;
 
-        import java.math.BigDecimal;
+import java.math.BigDecimal;
 
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@Getter
 public class BitcoinPrice {
     private final BigDecimal price;
     private final CurrencyPair currencyPair;
 
-    private BitcoinPrice(BigDecimal price, CurrencyPair currencyPair) {
-        this.price = price;
-        this.currencyPair = currencyPair;
-    }
-
     public static BitcoinPrice anBitcoinPrice(BigDecimal price, CurrencyPair currencyPair) {
         return new BitcoinPrice(price, currencyPair);
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public CurrencyPair getCurrencyPair() {
-        return currencyPair;
     }
 }
