@@ -27,6 +27,7 @@ targetCompatibility = 1.9
 
 dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
+    compile group: 'org.knowm.xchange', name: 'xchange-bitstamp', version: '4.3.17'
 
 
     testCompile "org.springframework.boot:spring-boot-starter-test"
