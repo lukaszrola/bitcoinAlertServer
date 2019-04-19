@@ -21,4 +21,8 @@ public class BitcoinPrice {
     private static String formatCurrency(String currencyPair) {
         return currencyPair.replace('-', '/');
     }
+
+    public boolean priceExceededLimit(BitcoinPrice limit){
+        return limit.getPrice().compareTo(price) < 0;
+    }
 }

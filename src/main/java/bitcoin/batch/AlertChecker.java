@@ -1,6 +1,8 @@
 package bitcoin.batch;
 
 import bitcoin.model.Alert;
+import bitcoin.model.AlertState;
+import bitcoin.model.BitcoinPrice;
 import bitcoin.service.AlertService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,30 +15,40 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 @Component
-public class AlertChecker {
+class AlertChecker {
     private static final Logger logger = LoggerFactory.getLogger(AlertChecker.class);
 
     private final AlertService alertService;
     private final BitcoinCurrentPriceProvider bitcoinCurrentPriceProvider;
 
     @Autowired
-    public AlertChecker(AlertService alertService, BitcoinCurrentPriceProvider bitcoinCurrentPriceProvider) {
+    AlertChecker(AlertService alertService, BitcoinCurrentPriceProvider bitcoinCurrentPriceProvider) {
         this.alertService = alertService;
         this.bitcoinCurrentPriceProvider = bitcoinCurrentPriceProvider;
     }
 
     @Scheduled(fixedRate = 10000)
-    public void checkAlerts() {
+    void checkAlerts() {
 
-        try {
-            BigDecimal limit = bitcoinCurrentPriceProvider.getLastPrice("BTC/USD").getPrice();
-            logger.info("Current price: " + limit);
-            Set<Alert> alerts = alertService.alertsAboveLimit(limit);
-            logger.info("exceeded " + alerts.size() + " alerts");
-        } catch (IOException e) {
-            logger.warn("Update failed");
-        }
-
-
+        alertService.getAlerts()
+                .forEach(this::updateAlertState);
+        alertService.getAlerts()
+                .forEach(alert -> logger.warn(alert.toString()));
     }
+
+    private void updateAlertState(Alert alert) {
+        try {
+            BitcoinPrice limit = alert.getLimit();
+            BitcoinPrice lastPrice = bitcoinCurrentPriceProvider.getLastPrice(limit.getCurrencyPair());
+            alert.setState(calculateState(limit, lastPrice));
+        } catch (IOException e) {
+            alert.setState(AlertState.UNDEFINED);
+            logger.warn("Cannot define state of alert: " + alert.getAlertName());
+        }
+    }
+
+    private AlertState calculateState(BitcoinPrice limit, BitcoinPrice lastPrice) {
+        return lastPrice.priceExceededLimit(limit) ? AlertState.RAISED : AlertState.NO_RAISED;
+    }
+
 }
