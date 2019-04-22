@@ -11,6 +11,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Component
 class AlertChecker {
@@ -18,19 +20,34 @@ class AlertChecker {
 
     private final AlertService alertService;
     private final BitcoinCurrentPriceProvider bitcoinCurrentPriceProvider;
+    private final AlertSender alertSender;
 
     @Autowired
-    AlertChecker(AlertService alertService, BitcoinCurrentPriceProvider bitcoinCurrentPriceProvider) {
+    AlertChecker(AlertService alertService, BitcoinCurrentPriceProvider bitcoinCurrentPriceProvider, AlertSender alertSender) {
         this.alertService = alertService;
         this.bitcoinCurrentPriceProvider = bitcoinCurrentPriceProvider;
+        this.alertSender = alertSender;
     }
 
     @Scheduled(fixedRate = 10000)
     void checkAlerts() {
+        updateAlertStates();
+        sendRaisedAlerts();
+    }
+
+    private void sendRaisedAlerts() {
+        Set<Alert> raisedAlerts = alertService.getAlerts().stream()
+                .filter(alert -> alert.getState() == AlertState.RAISED)
+                .collect(Collectors.toSet());
+
+        if (!raisedAlerts.isEmpty()) {
+            alertSender.sendAlerts(raisedAlerts);
+        }
+    }
+
+    private void updateAlertStates() {
         alertService.getAlerts()
                 .forEach(this::updateAlertState);
-        alertService.getAlerts()
-                .forEach(alert -> logger.warn(alert.toString()));
     }
 
     private void updateAlertState(Alert alert) {

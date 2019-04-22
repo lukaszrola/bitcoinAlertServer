@@ -18,6 +18,9 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(SpringExtension.class)
 @RunWith(MockitoJUnitRunner.class)
@@ -27,15 +30,19 @@ class AlertCheckerTest {
     private static final BigDecimal SOME_LOWER_VALUE = BigDecimal.TEN;
     private static final String SOME_CURRENCY = "BTC/USD";
     private static final String SOME_ALERT_NAME = "SOME_ALERT";
+
     @Mock
     private BitcoinCurrentPriceProvider bitcoinCurrentPriceProvider;
+    @Mock
+    private AlertSender alertSender;
+
     private AlertService alertService;
     private AlertChecker alertChecker;
 
     @BeforeEach
     void setUp() {
         alertService = new AlertService();
-        alertChecker = new AlertChecker(alertService, bitcoinCurrentPriceProvider);
+        alertChecker = new AlertChecker(alertService, bitcoinCurrentPriceProvider, alertSender);
     }
 
     @Test
@@ -46,6 +53,7 @@ class AlertCheckerTest {
         alertChecker.checkAlerts();
         Optional<AlertState> alert = alertService.getAlerts().stream().findAny().map(Alert::getState);
 
+        verify(alertSender).sendAlerts(any());
         assertThat(alert).hasValue(AlertState.RAISED);
     }
 
@@ -57,6 +65,7 @@ class AlertCheckerTest {
         alertChecker.checkAlerts();
         Optional<AlertState> alert = alertService.getAlerts().stream().findAny().map(Alert::getState);
 
+        verify(alertSender, never()).sendAlerts(any());
         assertThat(alert).hasValue(AlertState.NO_RAISED);
     }
 
@@ -68,6 +77,7 @@ class AlertCheckerTest {
         alertChecker.checkAlerts();
         Optional<AlertState> alert = alertService.getAlerts().stream().findAny().map(Alert::getState);
 
+        verify(alertSender, never()).sendAlerts(any());
         assertThat(alert).hasValue(AlertState.UNDEFINED);
     }
 
