@@ -33,12 +33,13 @@ class AlertControllerTest {
     private static final String ADD_ALERT_URL = "/alert?name=someAlert&limit=500&pair=BTC-USD";
     private static final String DELETE_ALERT_URL = "/alert?name=someAlert";
 
+    @SuppressWarnings("unused")
     @Autowired
     private MockMvc mockMvc;
 
+    @SuppressWarnings("unused")
     @MockBean
     private AlertService alertService;
-
 
     @Test
     void getAlerts() throws Exception {

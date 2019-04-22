@@ -9,13 +9,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 class BitcoinPriceTest {
 
     private static final String SOME_CURRENCY_PAIR = "BTC-USD";
-    private static final String SOME_FORMATED_CURRENCY_PAIR = "BTC/USD";
+    private static final String SOME_FORMATTED_CURRENCY_PAIR = "BTC/USD";
 
     @Test
     void shouldFormatCurrency() {
         BitcoinPrice bitcoinPrice = BitcoinPrice.anBitcoinPrice(BigDecimal.ONE, SOME_CURRENCY_PAIR);
 
-        assertThat(bitcoinPrice.getCurrencyPair()).isEqualTo(SOME_FORMATED_CURRENCY_PAIR);
+        assertThat(bitcoinPrice.getCurrencyPair()).isEqualTo(SOME_FORMATTED_CURRENCY_PAIR);
     }
 
     @Test

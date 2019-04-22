@@ -6,6 +6,7 @@ import lombok.Getter;
 
 import java.math.BigDecimal;
 
+@SuppressWarnings("SpellCheckingInspection")
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 public class BitcoinPrice {

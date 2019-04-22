@@ -11,8 +11,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Set;
 
 @Component
 class AlertChecker {
@@ -29,7 +27,6 @@ class AlertChecker {
 
     @Scheduled(fixedRate = 10000)
     void checkAlerts() {
-
         alertService.getAlerts()
                 .forEach(this::updateAlertState);
         alertService.getAlerts()

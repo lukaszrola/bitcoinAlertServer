@@ -14,7 +14,7 @@ class AlertServiceTest {
     private static final Alert FIRST_ALERT = Alert.anAlert("My  firstAlert", BigDecimal.ONE, SOME_CURRENCY);
     private static final Alert SECOND_ALERT = Alert.anAlert("My second Alert", BigDecimal.TEN, SOME_CURRENCY);
     private static final Alert THIRD_ALERT = Alert.anAlert("My third Alert", BigDecimal.valueOf(123L), SOME_CURRENCY);
-    private AlertService alertService = new AlertService();
+    private final AlertService alertService = new AlertService();
 
     @Test
     void addOneAlert() {
@@ -55,7 +55,7 @@ class AlertServiceTest {
     }
 
     @Test
-    void filterAlertsAboveLimit(){
+    void filterAlertsAboveLimit() {
         addAlerts(FIRST_ALERT, SECOND_ALERT, THIRD_ALERT);
 
         Set<Alert> alertsAboveLimit = alertService.alertsAboveLimit(SECOND_ALERT.getLimit().getPrice());

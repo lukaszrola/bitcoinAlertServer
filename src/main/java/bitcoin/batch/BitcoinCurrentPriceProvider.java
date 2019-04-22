@@ -11,13 +11,15 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@SuppressWarnings("SpellCheckingInspection")
 @Component
 class BitcoinCurrentPriceProvider {
-    private Exchange bitstamp = ExchangeFactory.INSTANCE.createExchange(BitstampExchange.class.getName());
-    private MarketDataService marketDataService = bitstamp.getMarketDataService();
+    @SuppressWarnings("SpellCheckingInspection")
+    private final Exchange bitstamp = ExchangeFactory.INSTANCE.createExchange(BitstampExchange.class.getName());
+    private final MarketDataService marketDataService = bitstamp.getMarketDataService();
 
     BitcoinPrice getLastPrice(String currencyPair) throws IOException {
         Ticker ticker = marketDataService.getTicker(new CurrencyPair(currencyPair));
-        return BitcoinPrice.anBitcoinPrice(ticker.getLast(),currencyPair);
+        return BitcoinPrice.anBitcoinPrice(ticker.getLast(), currencyPair);
     }
 }

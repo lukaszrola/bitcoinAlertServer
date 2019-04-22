@@ -10,31 +10,34 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 @RestController
-public class AlertController {
+class AlertController {
 
     private final AlertService alertService;
 
     @Autowired
-    public AlertController(AlertService alertService) {
+    AlertController(AlertService alertService) {
         this.alertService = alertService;
     }
 
+    @SuppressWarnings("unused")
     @GetMapping("/alerts")
-    public Set<Alert> getAlerts() {
+    Set<Alert> getAlerts() {
         return alertService.getAlerts();
     }
 
+    @SuppressWarnings("unused")
     @PutMapping("/alert")
     @ResponseStatus(value = HttpStatus.ACCEPTED)
-    public Alert putAlert(@RequestParam String name, @RequestParam BigDecimal limit, @RequestParam(name = "pair") String currencyPair) {
+    Alert putAlert(@RequestParam String name, @RequestParam BigDecimal limit, @RequestParam(name = "pair") String currencyPair) {
         Alert alert = Alert.anAlert(name, limit, currencyPair);
         alertService.addAlert(alert);
         return alert;
     }
 
+    @SuppressWarnings("unused")
     @DeleteMapping("/alert")
     @ResponseStatus(value = HttpStatus.ACCEPTED)
-    public String deleteAlert(@RequestParam String name) {
+    String deleteAlert(@RequestParam String name) {
         Alert alert = Alert.anTemplateAlert(name);
         alertService.deleteAlert(alert);
         return name;
