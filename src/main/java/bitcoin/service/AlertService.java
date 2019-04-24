@@ -13,22 +13,16 @@ public class AlertService {
 
     private final Set<Alert> alerts = new HashSet<>();
 
-    public Set<Alert> getAlerts(){
+    public Set<Alert> getAlerts() {
         return new HashSet<>(alerts);
     }
 
-    public void addAlert(Alert alert){
+    public void addAlert(Alert alert) {
+        alerts.remove(alert);
         alerts.add(alert);
     }
 
-    public void deleteAlert(Alert alert){
+    public void deleteAlert(Alert alert) {
         alerts.remove(alert);
     }
-
-    public Set<Alert>  alertsAboveLimit(BigDecimal limit){
-        return alerts.stream()
-                .filter(alert -> alert.getLimit().getPrice().compareTo(limit) > 0)
-                .collect(Collectors.toSet());
-    }
-
 }
