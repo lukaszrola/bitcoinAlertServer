@@ -36,9 +36,16 @@ dependencies {
     compile("org.webjars:stomp-websocket:2.3.3")
 
     testCompile "org.springframework.boot:spring-boot-starter-test"
-    testCompile "org.junit.jupiter:junit-jupiter-api:5.2.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.2.0"
     testCompile "org.junit.jupiter:junit-jupiter-params:5.2.0"
     testCompile "org.assertj:assertj-core:3.12.2"
+    testCompile group: 'org.junit.platform', name: 'junit-platform-runner', version: '1.4.2'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.27.0'
+    testCompile group: 'org.mockito', name: 'mockito-junit-jupiter', version: '2.27.0'
 
     testRuntime "org.junit.jupiter:junit-jupiter-engine:5.2.0"
+}
+
+test {
+    useJUnitPlatform()
 }
