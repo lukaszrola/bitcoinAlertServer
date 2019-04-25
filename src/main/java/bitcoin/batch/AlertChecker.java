@@ -31,7 +31,7 @@ class AlertChecker {
         this.alertSender = alertSender;
     }
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRateString = "${alerts.check.scheduled.fixed.rate}")
     void checkAlerts() {
         updateAlertStates();
         sendRaisedAlerts();
