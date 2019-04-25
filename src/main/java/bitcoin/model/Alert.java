@@ -3,14 +3,11 @@ package bitcoin.model;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.sql.Timestamp;
 import java.time.Instant;
-import java.util.Date;
 
+@Data
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-@ToString
 public class Alert {
     private static final BigDecimal EMPTY_LIMIT = BigDecimal.ZERO;
 
@@ -19,10 +16,8 @@ public class Alert {
 
     private final BitcoinPrice limit;
 
-    @Setter
     private AlertState state;
 
-    @Setter
     private Instant timestamp;
 
     public static Alert anAlert(String alertName, BigDecimal limit, String currencyPair) {
