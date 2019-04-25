@@ -17,9 +17,10 @@ public class AlertService {
         return new HashSet<>(alerts);
     }
 
-    public void addAlert(Alert alert) {
+    public Alert addAlert(Alert alert) {
         alerts.remove(alert);
         alerts.add(alert);
+        return alert;
     }
 
     public void deleteAlert(Alert alert) {

@@ -3,6 +3,7 @@ package bitcoin.batch;
 import bitcoin.model.Alert;
 import bitcoin.model.AlertState;
 import bitcoin.model.BitcoinPrice;
+import bitcoin.model.LastPrice;
 import bitcoin.service.AlertService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,7 +49,7 @@ class AlertCheckerTest {
     @Test
     void priceExceedLimit() throws IOException {
         alertService.addAlert(Alert.anAlert(SOME_ALERT_NAME, SOME_LOWER_VALUE, SOME_CURRENCY));
-        Mockito.when(bitcoinCurrentPriceProvider.getLastPrice(SOME_CURRENCY)).thenReturn(BitcoinPrice.anBitcoinPrice(SOME_HIGHER_VALUE, SOME_CURRENCY));
+        Mockito.when(bitcoinCurrentPriceProvider.getLastPrice(SOME_CURRENCY)).thenReturn(LastPrice.lastPrice(SOME_HIGHER_VALUE, SOME_CURRENCY));
 
         alertChecker.checkAlerts();
         Optional<AlertState> alert = alertService.getAlerts().stream().findAny().map(Alert::getState);
@@ -60,7 +61,7 @@ class AlertCheckerTest {
     @Test
     void priceNotExceedLimit() throws IOException {
         alertService.addAlert(Alert.anAlert(SOME_ALERT_NAME, SOME_HIGHER_VALUE, SOME_CURRENCY));
-        Mockito.when(bitcoinCurrentPriceProvider.getLastPrice(SOME_CURRENCY)).thenReturn(BitcoinPrice.anBitcoinPrice(SOME_LOWER_VALUE, SOME_CURRENCY));
+        Mockito.when(bitcoinCurrentPriceProvider.getLastPrice(SOME_CURRENCY)).thenReturn(LastPrice.lastPrice(SOME_LOWER_VALUE, SOME_CURRENCY));
 
         alertChecker.checkAlerts();
         Optional<AlertState> alert = alertService.getAlerts().stream().findAny().map(Alert::getState);

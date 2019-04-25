@@ -3,6 +3,7 @@ package bitcoin.batch;
 import bitcoin.model.Alert;
 import bitcoin.model.AlertState;
 import bitcoin.model.BitcoinPrice;
+import bitcoin.model.LastPrice;
 import bitcoin.service.AlertService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,8 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -53,10 +56,13 @@ class AlertChecker {
     private void updateAlertState(Alert alert) {
         try {
             BitcoinPrice limit = alert.getLimit();
-            BitcoinPrice lastPrice = bitcoinCurrentPriceProvider.getLastPrice(limit.getCurrencyPair());
+            LastPrice lastPrice1 = bitcoinCurrentPriceProvider.getLastPrice(limit.getCurrencyPair());
+            BitcoinPrice lastPrice = lastPrice1.getBitcoinPrice();
             alert.setState(calculateState(limit, lastPrice));
+            alert.setTimestamp(lastPrice1.getUpdateTime());
         } catch (IOException e) {
             alert.setState(AlertState.UNDEFINED);
+            alert.setTimestamp(Instant.now());
             logger.warn("Cannot define state of alert: " + alert.getAlertName());
         }
     }
