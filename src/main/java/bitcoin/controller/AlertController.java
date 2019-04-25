@@ -30,8 +30,7 @@ class AlertController {
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     Alert putAlert(@RequestParam String name, @RequestParam BigDecimal limit, @RequestParam(name = "pair") String currencyPair) {
         Alert alert = Alert.anAlert(name, limit, currencyPair);
-        alertService.addAlert(alert);
-        return alert;
+        return alertService.addAlert(alert);
     }
 
     @SuppressWarnings("unused")

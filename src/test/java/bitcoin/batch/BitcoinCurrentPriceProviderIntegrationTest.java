@@ -1,6 +1,6 @@
 package bitcoin.batch;
 
-import bitcoin.model.BitcoinPrice;
+import bitcoin.model.LastPrice;
 import org.junit.jupiter.api.Test;
 import org.knowm.xchange.currency.CurrencyPair;
 
@@ -16,8 +16,10 @@ class BitcoinCurrentPriceProviderIntegrationTest {
 
     @Test
     void shouldGetLatestPriceInUSD() throws IOException {
-        BitcoinPrice lastPrice = bitcoinCurrentPriceProvider.getLastPrice(SOME_CURRENCY);
+        LastPrice lastPrice = bitcoinCurrentPriceProvider.getLastPrice(SOME_CURRENCY);
+
         assertThat(lastPrice).isNotNull();
-        assertThat(lastPrice.getCurrencyPair()).isEqualTo(SOME_CURRENCY);
+        assertThat(lastPrice.getUpdateTime()).isNotNull();
+        assertThat(lastPrice.getBitcoinPrice().getCurrencyPair()).isEqualTo(SOME_CURRENCY);
     }
 }

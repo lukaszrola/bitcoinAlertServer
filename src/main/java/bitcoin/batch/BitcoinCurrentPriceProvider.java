@@ -1,6 +1,7 @@
 package bitcoin.batch;
 
 import bitcoin.model.BitcoinPrice;
+import bitcoin.model.LastPrice;
 import org.knowm.xchange.Exchange;
 import org.knowm.xchange.ExchangeFactory;
 import org.knowm.xchange.bitstamp.BitstampExchange;
@@ -18,8 +19,9 @@ class BitcoinCurrentPriceProvider {
     private final Exchange bitstamp = ExchangeFactory.INSTANCE.createExchange(BitstampExchange.class.getName());
     private final MarketDataService marketDataService = bitstamp.getMarketDataService();
 
-    BitcoinPrice getLastPrice(String currencyPair) throws IOException {
+    LastPrice getLastPrice(String currencyPair) throws IOException {
         Ticker ticker = marketDataService.getTicker(new CurrencyPair(currencyPair));
-        return BitcoinPrice.anBitcoinPrice(ticker.getLast(), currencyPair);
+        BitcoinPrice bitcoinPrice = BitcoinPrice.anBitcoinPrice(ticker.getLast(), currencyPair);
+        return LastPrice.lastPrice(bitcoinPrice, ticker.getTimestamp().toInstant());
     }
 }

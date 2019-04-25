@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.math.BigDecimal;
 import java.util.Set;
 
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -43,7 +44,7 @@ class AlertControllerTest {
 
     @Test
     void getAlerts() throws Exception {
-        Mockito.when(alertService.getAlerts()).thenReturn(ALERTS);
+        when(alertService.getAlerts()).thenReturn(ALERTS);
 
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(GET_ALERTS_URL)
                 .accept(MediaType.APPLICATION_JSON);
@@ -55,6 +56,7 @@ class AlertControllerTest {
 
     @Test
     void putAlert() throws Exception {
+        when(alertService.addAlert(SOME_ALERT)).thenReturn(SOME_ALERT);
         RequestBuilder requestBuilder = MockMvcRequestBuilders.put(ADD_ALERT_URL)
                 .accept(MediaType.APPLICATION_JSON);
 
@@ -70,6 +72,6 @@ class AlertControllerTest {
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isAccepted())
-                .andExpect(content().string(SOME_ALERT_NAME));
+                .andExpect(content().string(new Gson().toJson(SOME_ALERT_NAME)));
     }
 }
