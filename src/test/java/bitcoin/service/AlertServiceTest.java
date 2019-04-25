@@ -12,6 +12,7 @@ class AlertServiceTest {
 
     private static final String SOME_CURRENCY = "BTC-USD";
     private static final Alert FIRST_ALERT = Alert.anAlert("My  firstAlert", BigDecimal.ONE, SOME_CURRENCY);
+    private static final Alert FIRST_ALERT_UPDATED = Alert.anAlert("My  firstAlert", BigDecimal.ONE, SOME_CURRENCY);
     private static final Alert SECOND_ALERT = Alert.anAlert("My second Alert", BigDecimal.TEN, SOME_CURRENCY);
     private static final Alert THIRD_ALERT = Alert.anAlert("My third Alert", BigDecimal.valueOf(123L), SOME_CURRENCY);
     private final AlertService alertService = new AlertService();
@@ -45,6 +46,16 @@ class AlertServiceTest {
     }
 
     @Test
+    void updateInsertedAlert(){
+        alertService.addAlert(FIRST_ALERT);
+        alertService.addAlert(FIRST_ALERT_UPDATED);
+
+        Set<Alert> alerts = alertService.getAlerts();
+
+        assertThat(alerts).containsExactly(FIRST_ALERT_UPDATED);
+    }
+
+    @Test
     void addThreeAlertsRemoveTwo() {
         addAlerts(FIRST_ALERT, SECOND_ALERT, THIRD_ALERT);
         deleteAlerts(FIRST_ALERT, SECOND_ALERT);
@@ -52,15 +63,6 @@ class AlertServiceTest {
         Set<Alert> alerts = alertService.getAlerts();
 
         assertThat(alerts).containsOnly(THIRD_ALERT);
-    }
-
-    @Test
-    void filterAlertsAboveLimit() {
-        addAlerts(FIRST_ALERT, SECOND_ALERT, THIRD_ALERT);
-
-        Set<Alert> alertsAboveLimit = alertService.alertsAboveLimit(SECOND_ALERT.getLimit().getPrice());
-
-        assertThat(alertsAboveLimit).containsOnly(THIRD_ALERT);
     }
 
     private void addAlerts(Alert... alerts) {
