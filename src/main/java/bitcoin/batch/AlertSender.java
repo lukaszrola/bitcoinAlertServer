@@ -12,6 +12,8 @@ import java.util.stream.Collectors;
 
 @Component
 class AlertSender {
+    private static final String NEW_SECTION_SEPARATOR = "\n****************************************************\n";
+    private static final String TITLE = "**************Currently raised alerts***************\n";
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final String raisedAlertsTopic;
 
@@ -36,11 +38,9 @@ class AlertSender {
     }
 
     private String buildMessage(String raisedAlerts) {
-        return new StringBuilder()
-                .append("\n****************************************************\n")
-                .append("**************Currently raised alerts***************\n")
-                .append(raisedAlerts)
-                .append("\n****************************************************\n")
-                .toString();
+        return NEW_SECTION_SEPARATOR
+                .concat(TITLE)
+                .concat(raisedAlerts)
+                .concat(NEW_SECTION_SEPARATOR);
     }
 }

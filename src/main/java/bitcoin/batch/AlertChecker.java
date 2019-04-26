@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.Instant;
-import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,7 +31,7 @@ class AlertChecker {
         this.alertSender = alertSender;
     }
 
-    @Scheduled(fixedRate = 10000)
+    @Scheduled(fixedRateString = "${alerts.check.scheduled.fixed.rate}")
     void checkAlerts() {
         updateAlertStates();
         sendRaisedAlerts();

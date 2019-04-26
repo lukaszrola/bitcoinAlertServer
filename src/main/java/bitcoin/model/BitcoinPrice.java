@@ -1,16 +1,11 @@
 package bitcoin.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 import java.math.BigDecimal;
 
 @SuppressWarnings("SpellCheckingInspection")
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
-@Getter
-@ToString
+@Data
 public class BitcoinPrice {
     public static final BitcoinPrice EMPTY_PRICE = new BitcoinPrice(null, "");
 
